@@ -1,0 +1,17 @@
+<script src="birthday.js"></script>
+<script>
+  function getDates() {
+    var input = document.getElementById("dateInput");
+    document.getElementById("results").innerHTML = datesFromString(['mm', 'dd', 'yyyy'], input.value).map(function(date) {
+      result = date.month;
+      if (date.day) { result += '/' + date.day; }
+      if (date.year) { result += '/' + date.year; }
+      return result;
+    }).join("<br />");
+  }
+</script>
+
+<input id="dateInput" type="text" onkeyup="getDates()"></input>
+
+<div id="results">
+</div>
