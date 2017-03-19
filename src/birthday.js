@@ -16,7 +16,13 @@ finders = {
   yyyy: {
     key: 'year',
     find: function(str, i) {
-      return findNumberInString(str, 4, 1918, 2017);
+      if (str.length == 2) {
+        twoDigitOld = findNumberInString(str, 2, 18, 99).map(function(number) { number.value += 1900; return number; });
+        twoDigitNew = findNumberInString(str, 2,  0, 17).map(function(number) { number.value += 2000; return number; });
+        return twoDigitOld.concat(twoDigitNew);
+      } else {
+        return findNumberInString(str, 4, 1918, 2017);
+      }
     }
   }
 }

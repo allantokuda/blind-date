@@ -28,6 +28,20 @@ describe('datesFromString', function() {
       expect(results[1]).toEqual({ month: 11, day: 1, year: 1984 });
     });
 
+    it('interprets two-digit years', function() {
+      results = datesFromString(FORMAT, '7984');
+      expect(results.length).toEqual(1);
+      expect(results[0]).toEqual({ month: 7, day: 9, year: 1984 });
+    });
+
+    it('interprets two-digit years with ambiguous months', function() {
+      results = datesFromString(FORMAT, '10184');
+      expect(results.length).toEqual(2);
+      expect(results[0]).toEqual({ month: 1, day: 1, year: 1984 });
+      expect(results[1]).toEqual({ month: 10, day: 1, year: 1984 });
+    });
+
+
   });
 
   describe('findNumberInString', function() {
