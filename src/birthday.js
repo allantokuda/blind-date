@@ -61,14 +61,37 @@ datesFromString = function(format, str) {
       maxKeys = numKeys;
     }
   });
-  dates.forEach(function(date) {
-    numKeys = Object.keys(date).length;
-    if (numKeys == maxKeys) {
-      bestDates.push(date);
-    }
-  });
 
-  return bestDates;
+  return dates.filter(function(date) {
+    numKeys = Object.keys(date).length;
+    return numKeys == maxKeys && isValidDate(date);
+  });
+}
+
+isValidDate = function(date) {
+  if (date.day && date.month) {
+    return date.day <= daysInMonth(date);
+  } else {
+    return true;
+  }
+}
+
+daysInMonth = function(date) {
+  if ([4,6,9,11].indexOf(date.month) != -1) {
+    return 30;
+  } else if (date.month == 2) {
+    if (isLeapYear(date.year)) {
+      return 29;
+    } else {
+      return 28;
+    }
+  } else {
+    return 31;
+  }
+}
+
+isLeapYear = function(year) {
+  return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
 }
 
 

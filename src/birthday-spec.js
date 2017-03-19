@@ -41,7 +41,25 @@ describe('datesFromString', function() {
       expect(results[1]).toEqual({ month: 10, day: 1, year: 1984 });
     });
 
+    it('rejects dates that have valid formatting but are not real due to calendar rules including leap years', function() {
+      results = datesFromString(FORMAT, '2291999');
+      expect(results.length).toEqual(0);
 
+      results = datesFromString(FORMAT, '2292000');
+      expect(results.length).toEqual(1);
+
+      results = datesFromString(FORMAT, '2292001');
+      expect(results.length).toEqual(0);
+
+      results = datesFromString(FORMAT, '9302002');
+      expect(results.length).toEqual(1);
+
+      results = datesFromString(FORMAT, '9312002');
+      expect(results.length).toEqual(0);
+
+      results = datesFromString(FORMAT, '10312003');
+      expect(results.length).toEqual(1);
+    });
   });
 
   describe('findNumberInString', function() {
