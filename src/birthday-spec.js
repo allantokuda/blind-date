@@ -111,6 +111,14 @@ describe('datesFromString', function() {
       expect(resultValues('201700', 4, 4, 1918, 2017)).toEqual([2017]);
       expect(resultValues('201800', 4, 4, 1918, 2017)).toEqual([]);
     });
+
+    xit('stops at dividing characters', function() {
+      expect(resultValues('11' , 1, 2, 1, 31)).toEqual([1, 11]);
+      expect(resultValues('1/1', 1, 2, 1, 31)).toEqual([1]);
+      expect(resultValues('1 1', 1, 2, 1, 31)).toEqual([1]);
+      expect(resultValues('1.1', 1, 2, 1, 31)).toEqual([1]);
+      expect(resultValues('1-1', 1, 2, 1, 31)).toEqual([1]);
+    });
   });
 
 });
