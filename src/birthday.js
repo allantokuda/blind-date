@@ -21,7 +21,7 @@ finders = {
         twoDigitNew = findNumberInString(str, 2, 2,  0, 17).map(function(number) { number.value += 2000; return number; });
         return twoDigitOld.concat(twoDigitNew);
       } else {
-        return findNumberInString(str, 4, 4, 1918, 2017);
+        return findNumberInString(str, 4, 4, 1900, 2017);
       }
     }
   }
