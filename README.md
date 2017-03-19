@@ -1,0 +1,4 @@
+```
+$ npm install
+$ karma start
+```

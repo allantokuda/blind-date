@@ -1,0 +1,14 @@
+{
+  "name": "BlindDate",
+  "version": "0.0.1",
+  "description": "Smart date input field",
+  "main": "example.js",
+  "author": "Allan Tokuda",
+  "devDependencies": {
+    "jasmine": "~2.3.2",
+    "jasmine-core": "~2.3.4",
+    "karma": "~0.13.22",
+    "karma-firefox-launcher": "~0.1.6",
+    "karma-jasmine": "~0.3.6"
+  }
+}
