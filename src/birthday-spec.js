@@ -112,12 +112,12 @@ describe('datesFromString', function() {
       expect(resultValues('201800', 4, 4, 1918, 2017)).toEqual([]);
     });
 
-    xit('stops at dividing characters', function() {
-      expect(resultValues('11' , 1, 2, 1, 31)).toEqual([1, 11]);
-      expect(resultValues('1/1', 1, 2, 1, 31)).toEqual([1]);
-      expect(resultValues('1 1', 1, 2, 1, 31)).toEqual([1]);
-      expect(resultValues('1.1', 1, 2, 1, 31)).toEqual([1]);
-      expect(resultValues('1-1', 1, 2, 1, 31)).toEqual([1]);
+    it('stops at dividing characters', function() {
+      expect(findNumberInString('11' , 1, 2, 1, 31)).toEqual([{ value: 1, length: 1 }, { value: 11, length: 2 }]);
+      expect(findNumberInString('1/1', 1, 2, 1, 31)).toEqual([{ value: 1, length: 2 }]);
+      expect(findNumberInString('1 1', 1, 2, 1, 31)).toEqual([{ value: 1, length: 2 }]);
+      expect(findNumberInString('1.1', 1, 2, 1, 31)).toEqual([{ value: 1, length: 2 }]);
+      expect(findNumberInString('1-1', 1, 2, 1, 31)).toEqual([{ value: 1, length: 2 }]);
     });
   });
 

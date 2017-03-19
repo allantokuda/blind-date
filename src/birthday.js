@@ -92,8 +92,13 @@ isLeapYear = function(year) {
 }
 
 
-/* Find all integers that can be extracted start at the beginning of `searchString`, within the given number of digits and min/max range. */
+/* Find all integers that can be extracted start at the beginning of `searchString`,
+   within the given number of digits and min/max range. */
 findNumberInString = function(searchString, minDigits, maxDigits, min = 1, max = Infinity) {
+  if (delimitedNumber = findNumberByDelimiter(searchString)) {
+    return [delimitedNumber];
+  }
+
   results = [];
   for(length=minDigits; length<=maxDigits; length++) {
     testString = searchString.substr(0, length);
@@ -106,6 +111,26 @@ findNumberInString = function(searchString, minDigits, maxDigits, min = 1, max =
     }
   }
   return results;
+}
+
+findNumberByDelimiter = function(searchString) {
+  var delimiters = ['/', '\\', '-', '.', ' ', ':'];
+  var index = Infinity;
+  delimiters.forEach(function(delimiter) {
+    thisIndex = searchString.indexOf(delimiter);
+    if (thisIndex > 0 && thisIndex < index) {
+      index = thisIndex;
+    }
+  });
+
+  var value = parseInt(searchString.slice(0, index));
+
+  if (value && index < Infinity) {
+    return {
+      value: value,
+      length: index + 1
+    };
+  }
 }
 
 
