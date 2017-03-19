@@ -40,31 +40,22 @@ datesFromString = function(format, str) {
   finders[thisFormat].find(str).forEach(function(partResult) {
     var remainderString = str.slice(partResult.length);
 
+    additions = false;
     datesFromString(remainderFormat, remainderString).forEach(function(date) {
       date[key] = partResult.value;
       dates.push(date);
+      additions = true;
     });
 
-    if (dates.length == 0) {
+    if (additions == false) {
       var date = {}
       date[key] = partResult.value;
       dates.push(date);
     }
   });
 
-  var bestDates = [];
-
-  var maxKeys = 0;
-  dates.forEach(function(date) {
-    numKeys = Object.keys(date).length;
-    if (numKeys > maxKeys) {
-      maxKeys = numKeys;
-    }
-  });
-
   return dates.filter(function(date) {
-    numKeys = Object.keys(date).length;
-    return numKeys == maxKeys && isValidDate(date);
+    return isValidDate(date) && isReasonable(date, str);
   });
 }
 
@@ -74,6 +65,12 @@ isValidDate = function(date) {
   } else {
     return true;
   }
+}
+
+isReasonable = function(date, str) {
+  // Once the user types 6 digits they should have started typing the year.
+  // At 5 digits it's still ambiguous and nothing should be ruled out yet.
+  return !(str.length >= 6 && date.year === undefined);
 }
 
 daysInMonth = function(date) {

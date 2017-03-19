@@ -36,9 +36,10 @@ describe('datesFromString', function() {
 
     it('interprets two-digit years with ambiguous months', function() {
       results = datesFromString(FORMAT, '10184');
-      expect(results.length).toEqual(2);
+      expect(results.length).toEqual(3);
       expect(results[0]).toEqual({ month: 1, day: 1, year: 1984 });
       expect(results[1]).toEqual({ month: 10, day: 1, year: 1984 });
+      expect(results[2]).toEqual({ month: 10, day: 18 }); // '4' goes into entering year 1940-something
     });
 
     it('rejects dates that have valid formatting but are not real due to calendar rules including leap years', function() {
@@ -69,6 +70,15 @@ describe('datesFromString', function() {
       results = datesFromString(FORMAT, '7901');
       expect(results.length).toEqual(1);
       expect(results[0]).toEqual({month: 7, day: 9, year: 2001});
+    });
+
+    it('interprets partial dates that the user has not finished typing', function() {
+      results = datesFromString(FORMAT, '1231');
+      expect(results.length).toEqual(4);
+      expect(results[0]).toEqual({ month: 1, day: 2, year: 1931 });
+      expect(results[1]).toEqual({ month: 1, day: 23 });
+      expect(results[2]).toEqual({ month: 12, day: 3 });
+      expect(results[3]).toEqual({ month: 12, day: 31 });
     });
   });
 
