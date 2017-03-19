@@ -2,14 +2,14 @@ finders = {
   dd: {
     key: 'day',
     find: function(str, i) {
-      return findNumberInString(str, 2, 1, 31); // TODO: limit to 28 for February, etc.
+      return findNumberInString(str, 1, 2, 1, 31);
     }
   },
 
   mm: {
     key: 'month',
     find: function(str, i) {
-      return findNumberInString(str, 2, 1, 12);
+      return findNumberInString(str, 1, 2, 1, 12);
     }
   },
 
@@ -17,15 +17,15 @@ finders = {
     key: 'year',
     find: function(str, i) {
       if (str.length == 2) {
-        twoDigitOld = findNumberInString(str, 2, 18, 99).map(function(number) { number.value += 1900; return number; });
-        twoDigitNew = findNumberInString(str, 2,  0, 17).map(function(number) { number.value += 2000; return number; });
+        twoDigitOld = findNumberInString(str, 2, 2, 18, 99).map(function(number) { number.value += 1900; return number; });
+        twoDigitNew = findNumberInString(str, 2, 2,  0, 17).map(function(number) { number.value += 2000; return number; });
         return twoDigitOld.concat(twoDigitNew);
       } else {
-        return findNumberInString(str, 4, 1918, 2017);
+        return findNumberInString(str, 4, 4, 1918, 2017);
       }
     }
   }
-}
+};
 
 
 datesFromString = function(format, str) {
@@ -96,9 +96,9 @@ isLeapYear = function(year) {
 
 
 /* Find all integers that can be extracted start at the beginning of `searchString`, within the given number of digits and min/max range. */
-findNumberInString = function(searchString, numDigits, min = 1, max = Infinity) {
+findNumberInString = function(searchString, minDigits, maxDigits, min = 1, max = Infinity) {
   results = [];
-  for(length=1; length<=numDigits; length++) {
+  for(length=minDigits; length<=maxDigits; length++) {
     testString = searchString.substr(0, length);
     num = parseInt(testString, 10);
     if (num >= min && num <= max) {
